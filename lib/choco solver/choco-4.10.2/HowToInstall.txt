@@ -1,0 +1,19 @@
+*Hướng dẫn cài đặt:
+- JavaSE 12:
+	1. Add choco-solver-4.10.2-no-dep.jar và choco-solver-4.10.2-sources.jar vào Modulepath.
+	2. Trong thư mục dependencies, add choco-sat-1.0.2.jar và j.heap-0.10.jar vào Classpath,
+	   8 file .jar còn lại add vào Modulepath.
+	3. Tạo thư mục tên "lib" trong project và copy 12 file .jar bên trên vào thư mục này.	
+	3. Thêm: requires org.chocosolver; vào file module-info.java.
+	4. Refresh project.
+
+- Java 8:
+	1. Add choco-solver-4.10.2-no-dep.jar, choco-solver-4.10.2-sources.jar
+	   và 10 file.jar trong thư mục dependencies vào Java Build Path/Libraries của project.
+	2. Tạo thư mục tên "lib" trong project và copy 12 file .jar bên trên vào thư mục này.	
+	3. Refresh project.
+
+*Note: 1. File choco-solver-4.10.2-sources.jar chứa tất cả javadoc OFFLINE của các api trong thư viện. 
+          Nếu không add file này vào thì có thể sử dụng javadoc ONLINE tại: http://www.choco-solver.org/apidocs/
+       2. (Chỉ dành cho Java 9 trở lên) Nếu project chưa có file module-info.java thì có thể tạo file này bằng cách:
+	  click chuột phải vào project --> Configure --> Create module-info.java
