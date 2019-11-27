@@ -1,4 +1,4 @@
-The problem consider multiple vehicles and multiple location
+The problem considers multiple vehicles and multiple locations
 All vehicles depart from the depot 0 and turn back to depot after their own trip
 Each vehicle has limited loading capacity, limited total trip distance and must turn back to the depot no later than a given timeline
 Each location has its demand and it takes time to load the goods onto the container
