@@ -90,7 +90,7 @@ public class MVRPWithTimeConstraints {
 			s[i] = cplex.intVarArray(this.v, timeWindow[i][0],  timeWindow[i][1]);
 		}
 
-		// at most this.v vehicle depart from depot 0
+		// at most this.v vehicles depart from depot 0
 		IloIntExpr[] temp1 = new IloIntExpr[n * v];
 		int idx = 0;
 		for (int j = 0; j < n; j++) {
@@ -100,7 +100,7 @@ public class MVRPWithTimeConstraints {
 		}
 		cplex.addLe(cplex.sum(temp1), this.v);
 
-		// at most this.v vehicle return to depot 0
+		// at most this.v vehicles turn back to depot 0
 		IloIntExpr[] temp2 = new IloIntExpr[n * v];
 		idx = 0;
 		for (int i = 0; i < n; i++) {
@@ -139,7 +139,7 @@ public class MVRPWithTimeConstraints {
 			cplex.addEq(cplex.sum(temp), 1);
 		}
 
-		// if vehicle v enter to location i, v must depart from i
+		// if vehicle v enters to location i, v must leave i 
 		for (int v = 0; v < this.v; v++) {
 			for (int i = 0; i < this.n; i++) {
 				IloIntExpr[] depart = new IloIntExpr[n - 1];
