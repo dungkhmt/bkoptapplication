@@ -203,7 +203,7 @@ public class MVRPWithTimeConstraints {
 			}
 		}
 
-		IloIntExpr objectiveFunc = cplex.max(accumulativeDistance);
+		IloIntExpr objectiveFunc = cplex.sum(accumulativeDistance);
 		cplex.addMinimize(objectiveFunc);
 
 	}
@@ -221,13 +221,13 @@ public class MVRPWithTimeConstraints {
 	}
 
 	public void printSolution() throws UnknownObjectException, IloException {
-		cplex.output().println("Objective value ~ Maximum distance = " + cplex.getObjValue());
+		double totalDis=0;
 		for (int v = 0; v < this.v; v++) {
 			int next = 0;
 			double returnTime = 0, departTime = cplex.getValue(this.s[0][v]);
 			System.out.print("Vehicle " + v + ": \n\tPath: 0(Leaving: " + departTime + ")");
 			for (int i = 0; i < n; i++) {
-				if (cplex.getValue(x[0][i][v]) == 1) {
+				if (cplex.getValue(x[0][i][v])>0) {
 					next = i;
 					System.out.print(" --> " + next + "(Reaching: " + cplex.getValue(s[next][v]) + ", leaving: "
 							+ (cplex.getValue(s[next][v]) + this.timeForLoadingGoods[next]) + ")");
@@ -235,7 +235,7 @@ public class MVRPWithTimeConstraints {
 			}
 			while (next != 0) {
 				for (int j = 0; j < n; j++) {
-					if (cplex.getValue(x[next][j][v]) == 1) {
+					if (cplex.getValue(x[next][j][v])>0) {
 						int pre = next;
 						next = j;
 						System.out.print(" --> " + j);
@@ -253,8 +253,9 @@ public class MVRPWithTimeConstraints {
 			System.out.println("\n\tTotal distance: " + cplex.getValue(this.accumulativeDistance[v]));
 			System.out.println("\tTotal payload: " + cplex.getValue(this.accumulativeLoading[v]));
 			System.out.println("\tTotal trip time: " + (returnTime-departTime));
-
+			totalDis+=cplex.getValue(this.accumulativeDistance[v]);
 		}
+		cplex.output().println("\nObjective value ~ Total trips distance = " + totalDis);
 	}
 
 	public static void main(String[] args) throws IloException {
