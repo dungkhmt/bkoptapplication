@@ -1,4 +1,4 @@
-package myself;
+package tuanla.CPLEX.JavaAPIs;
 
 import ilog.concert.IloException;
 import ilog.concert.IloIntVar;
