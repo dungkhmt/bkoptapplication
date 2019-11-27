@@ -1,0 +1,13 @@
+The problem consider multiple vehicles and multiple location
+All vehicles depart from the depot 0 and turn back to depot after their own trip
+Each vehicle has limited loading capacity, limited total trip distance and must turn back to the depot no later than a given timeline
+Each location has its demand and it takes time to load the goods onto the container
+Each location has its time window and a vehicle must enter and load the goods within that time window
+Input:
+First line contains v = the number of vehicles
+Next v lines: each line contains the maximum loading capacity, maximum trip distance and the timeline that the vehicle must turn back to the depot no later than
+Next line contains n = the number of location
+Next n lines: each line contains the demand and time-cost for loading that goods demand onto the container
+Next n lines: distances matrix
+Next n lines: time matrix
+Next n lines: time windows
