@@ -256,6 +256,7 @@ public class MVRPWithTimeConstraints {
 			totalDis+=cplex.getValue(this.accumulativeDistance[v]);
 		}
 		cplex.output().println("\nObjective value ~ Total trips distance = " + totalDis);
+		cplex.end();
 	}
 
 	public static void main(String[] args) throws IloException {
