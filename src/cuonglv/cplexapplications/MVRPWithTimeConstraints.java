@@ -87,7 +87,7 @@ public class MVRPWithTimeConstraints {
 		}
 
 		for (int i = 0; i < n; i++) {
-			s[i] = cplex.intVarArray(this.v, timeWindow[i][0],  timeWindow[i][1]);
+			s[i] = cplex.intVarArray(this.v, timeWindow[i][0],  timeWindow[i][1] - this.timeForLoadingGoods[i]);
 		}
 
 		// at most this.v vehicles depart from depot 0
@@ -262,7 +262,7 @@ public class MVRPWithTimeConstraints {
 	public static void main(String[] args) throws IloException {
 		// TODO Auto-generated method stub
 		MVRPWithTimeConstraints test = new MVRPWithTimeConstraints();
-		test.readData("data/VehiclesRoutingProblems/MVRPWithTimeWindows.txt");
+		test.readData("data/VehiclesRoutingProblems/MVRPWithTimeWindows-MIP.txt");
 		test.stateModel();
 		test.solve();
 
