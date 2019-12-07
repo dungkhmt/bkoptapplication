@@ -1,0 +1,24 @@
+Reading data successfully.
+At least one constraint is free, i.e., neither posted or reified. ).
+ARITHM ([prop(IV_50.EQ.(IV_45+144))]) is free
+Objective value: IV_459 = 1989
+Vehicle 0: 0 (DepartTime: 40) --> 6 (Reaching:121, leaving: 134) --> 4 (Reaching:176, leaving: 197) --> 0(ReturnTime: (323)
+	Total distance: 415
+	Total payload: 36
+	Total trip time: 283
+Vehicle 1: 0 (DepartTime: 10) --> 1 (Reaching:100, leaving: 111) --> 10 (Reaching:135, leaving: 151) --> 0(ReturnTime: (256)
+	Total distance: 365
+	Total payload: 48
+	Total trip time: 246
+Vehicle 2: 0 (DepartTime: 20) --> 12 (Reaching:89, leaving: 100) --> 11 (Reaching:201, leaving: 214) --> 0(ReturnTime: (286)
+	Total distance: 403
+	Total payload: 48
+	Total trip time: 266
+Vehicle 3: 0 (DepartTime: 20) --> 7 (Reaching:110, leaving: 125) --> 8 (Reaching:192, leaving: 204) --> 9 (Reaching:252, leaving: 260) --> 0(ReturnTime: (311)
+	Total distance: 426
+	Total payload: 59
+	Total trip time: 291
+Vehicle 4: 0 (DepartTime: 0) --> 2 (Reaching:60, leaving: 70) --> 5 (Reaching:109, leaving: 119) --> 3 (Reaching:176, leaving: 188) --> 0(ReturnTime: (260)
+	Total distance: 380
+	Total payload: 60
+	Total trip time: 260
