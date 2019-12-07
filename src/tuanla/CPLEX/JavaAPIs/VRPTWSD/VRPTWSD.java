@@ -3,7 +3,7 @@
  */
 
 
-package myself;
+package tuanla.CPLEX.JavaAPIs.VRPTWSD;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -262,7 +262,7 @@ public class VRPTWSD {
 		
 		VRPTWSD model = new VRPTWSD();
 		
-		model.readData(new File("CVRPTW-data.txt"));
+		model.readData(new File("data/VRPTWSD/VRPTWSD data.txt"));
 		model.modelAndSolve();			               
 	}
 }

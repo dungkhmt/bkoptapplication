@@ -1,0 +1,19 @@
+{
+	"requests":[
+			{"code":"R1","location":"1","weight":12,"earlyTime":"2019-11-01 08:00:00","lateTime":"2019-11-01 16:30:00","deliveryDuration":600},
+			{"code":"R2","location":"2","weight":10,"earlyTime":"2019-11-01 08:00:00","lateTime":"2019-11-01 16:30:00","deliveryDuration":600}			
+	],
+	"trucks":[
+		{"code":"T1","depot":"0","startTime":"2019-11-01 06:00:00","endTime":"2019-11-01 17:00;00","capacity":100},
+		{"code":"T2","depot":"0","startTime":"2019-11-01 06:00:00","endTime":"2019-11-01 17:00;00","capacity":100}
+	],
+	"distances":[
+		{"from":"0","to":"1","distance":100,"travelTime":900},
+		{"from":"0","to":"2","distance":100,"travelTime":900},
+		{"from":"1","to":"0","distance":100,"travelTime":900},
+		{"from":"1","to":"2","distance":100,"travelTime":900},
+		{"from":"2","to":"0","distance":100,"travelTime":900},
+		{"from":"2","to":"1","distance":100,"travelTime":900}
+		
+	]
+}
