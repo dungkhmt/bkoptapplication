@@ -1,5 +1,5 @@
 /*
- * This program solves VRPTWSD using the MIP model. Please read the file "model.txt" for more details about the model for this problem.
+ * This program solves VRPTWSD using the MIP model. Please read the file "Vehnicle_Routing_Problem.pdf" for more details about the model for this problem.
  */
 
 
