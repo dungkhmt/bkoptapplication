@@ -1,0 +1,24 @@
+\documentclass[11pt]{book}    
+
+%\usepackage[utf8]{vietnam}
+          % Book class in 11 points
+\parindent0pt  \parskip10pt             % make block paragraphs
+\raggedright                            % do not right justify
+
+\title{\bf Combinatorial Optimization Problem: Model and Implementation}    % Supply information
+\author{Dang Xuan Vuong, Le Anh Tuan, Le Van Cuong, Pham Quang Dung}              %   for the title page.
+\date{\today}                           %   Use current date. 
+
+% Note that book class by default is formatted to be printed back-to-back.
+\begin{document}                        % End of preamble, start of text.
+\frontmatter                            % only in book class (roman page #s)
+\maketitle                              % Print title page.
+\tableofcontents                        % Print table of contents
+\mainmatter                             % only in book class (arabic page #s)
+
+\chapter{Introduction}
+This document describes combinatorial optimization problems including models (mixed integer programming, constraint programming) and its implementation by MIP solver, CP solver, CBLS solver, etc. 
+\chapter{Case study} 
+\input{CVRPTW} 
+
+\end{document}                          % The required last line

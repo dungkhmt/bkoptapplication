@@ -1,0 +1,32 @@
+\section{Capacitated Vehicle Routing Time Windows Problem}
+
+\subsection{Problem description}
+There are $N$ delivery requests 1,2, ..., $N$. Request $i$ ($i=1,...,N$) has
+\begin{itemize}
+\item w(i): weight of item
+\item e(i): early delivery time
+\item l(i): late delivery time
+\item d(i): delivery duration
+\item delivery location is point i
+\end{itemize}
+
+There are $K$ trucks for delivering. Truck $k (k=1,\dots,K)$ has
+\begin{itemize}
+\item c(j): capacity of the truck (total weight of items on the truck cannot exceed its capacity)
+\item e(j): start working time
+\item l(j): end working time
+\end{itemize}
+
+-depot location is point 0
+
+$d(i,j)$ and $t(i,j)$ are respectively distance and travel time from point $i$ to point $j$ ($i,j = 0,1,...,N$).
+
+Objective is to minimize total distance of the routes of trucks.
+\subsection{Mixed Integer Programming model}
+\subsubsection{Variables}
+\begin{itemize}
+	\item Binary variable $X(k,i,j)\in\{0,1\}$ in which $X(k,i,j)=1$ indicates that truck $k$ traverse from point $i$ to point $j$ ($\forall k\in \{1,.\dots,K\}, i,j\in\{0,1,\dots,N\}$).
+\end{itemize}
+\subsubsection{Constraints}
+
+\subsubsection{Objective functions}
