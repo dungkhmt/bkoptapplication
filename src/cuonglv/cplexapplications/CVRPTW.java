@@ -9,7 +9,7 @@ import ilog.concert.IloIntVar;
 import ilog.cplex.IloCplex;
 import ilog.cplex.IloCplex.UnknownObjectException;
 
-public class CVRPWT {
+public class CVRPTW {
 
 	private final int M = 999999;
 
@@ -231,8 +231,8 @@ public class CVRPWT {
 
 	public static void main(String[] args) throws IloException {
 		// TODO Auto-generated method stub
-		CVRPWT test = new CVRPWT();
-		test.readData("data/VehiclesRoutingProblems/CVRPWT.txt");
+		CVRPTW test = new CVRPTW();
+		test.readData("data/VehiclesRoutingProblems/CVRPTW.txt");
 		test.stateModel();
 		test.solve();
 
