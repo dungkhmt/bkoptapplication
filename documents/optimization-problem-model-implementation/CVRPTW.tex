@@ -1,32 +1,125 @@
 \section{Capacitated Vehicle Routing Time Windows Problem}
 
 \subsection{Problem description}
-There are $N$ delivery requests 1,2, ..., $N$. Request $i$ ($i=1,...,N$) has
+The are N delivery requests. The \emph{i-th} request require us to ship an item with a weight of \emph{w(i)} to location \emph{i} in period of time beetween \emph{e(i)} and \emph{l(i)}. Unloading item \emph{i} require a period of time equal to \emph{d(i)}. We use \emph{K} trucks for delivering. The \emph{k-th} truck has capacity \emph{c(k)}, start working time at \emph{e(k)} and finish working time at \emph{l(k)}. Travel distance and travel time between location \emph{i} and location \emph{j} respectively are \emph{d(i, j)} and \emph{t(i, j)}. We need to establish a route for the trucks to meet all the requests so that the total travel distance of the trucks is minimal.
+
+\subsection{General Model}
+Graph $G = (V, E)$. Set of vertices $V = \{0, 1, 2,\dots, N\}$ represents depot (vertex $0$) and locations to delivery (vertex $1, 2,\dots, N$). Each vertex in $\{1, 2,\dots, N\}$ has:
 \begin{itemize}
-\item w(i): weight of item
-\item e(i): early delivery time
-\item l(i): late delivery time
-\item d(i): delivery duration
-\item delivery location is point i
+\item $w(i)$: weight of item.
+\item $e(i)$: the earliest delivery time.
+\item $l(i)$: the latest delivery time.
+\item $d(i)$: delivering duration.
 \end{itemize}
-
-There are $K$ trucks for delivering. Truck $k (k=1,\dots,K)$ has
+Set of edges $E = \{(i, j) \mid i, j \in V\}$ represents paths between 2 locations (or depot and a location). Each edge $(i, j) \in E$ has:
 \begin{itemize}
-\item c(j): capacity of the truck (total weight of items on the truck cannot exceed its capacity)
-\item e(j): start working time
-\item l(j): end working time
+	\item $d(i, j)$: travel distance between location (or depot) $i$ and location (or depot) $j$.
+	\item $t(i, j)$: travel time between location (or depot) $i$ and location (or depot) $j$.
 \end{itemize}
-
--depot location is point 0
-
-$d(i,j)$ and $t(i,j)$ are respectively distance and travel time from point $i$ to point $j$ ($i,j = 0,1,...,N$).
-
-Objective is to minimize total distance of the routes of trucks.
-\subsection{Mixed Integer Programming model}
+There are $K$ trucks for delivering. Truck $k$ $(k=1, 2,\dots,K)$ has
+\begin{itemize}
+\item $c(k)$: capacity of the truck (total weight of items on the truck cannot exceed its capacity).
+\item $e(k)$: start working time.
+\item $l(k)$: end working time.
+\end{itemize}
+We need to find a route for trucks on graph $G$ that satisfies the conditions:
+\begin{itemize}
+	\item The \emph{i-th} item is delivered to location \emph{i} from $e(i)$ to $l(i)$, including unloading time $d(i)$.
+	\item The \emph{k-th} truck start working from vertex $0$ after $e(k)$ and go back vertex $0$ before $l(e)$.
+	\item The \emph{k-th} truck never carry over $c(k)$ of item weight.
+	\item Total travel distance of the trucks is minimal.
+\end{itemize}
+\subsection{Simplify the problem}
+Before going into specific solving models, we will simplify the problem by adding some hypotheses.
+\begin{itemize}
+	\item Each request $i$ is served by only one truck $k$. So, we can't split item into multiple pieces and the trucks can't exchange item in working period.
+	\item Each truck $k$ leave depot only once after starting working time and go back before finishing working time.
+	\item Direct path between location $i$ and location $j$ is the best choice (in both sense of distance and time travel) if we want to travel from $i$ to $j$.
+\end{itemize}
+\subsection{Constrained Programming Model}
+To create this below Constrained Programming Model formulations, we need to include hypotheses at section \emph{2.1.3}:
 \subsubsection{Variables}
 \begin{itemize}
-	\item Binary variable $X(k,i,j)\in\{0,1\}$ in which $X(k,i,j)=1$ indicates that truck $k$ traverse from point $i$ to point $j$ ($\forall k\in \{1,.\dots,K\}, i,j\in\{0,1,\dots,N\}$).
+	\item $X(k,i,j)\in\{0,1\}$ in which $X(k,i,j)=1$ indicates that truck $k$ traverse from point $i$ to point $j$ ($\forall k\in \{1,.\dots,K\}, i,j\in\{0,1,\dots,N\}$).
+	\item $Z(k, i)\in\{0,1\}$ in which $Z(k, i)=1$ indicates that truck $k$ serve $i-th$ request ($\forall k \in \{1,.\dots,K\}, i,j\in\{0,1,\dots,N\}$).
+	\item $Y_{a}(k, i)$: the time when truck $k$ arrives location $i$.
+	\item $Y_{s}(k, i)$: the time when truck $k$ truck start delivering at location $i$.
+	\item $Y_{d}(k, i)$: the time when truck $k$ truck leaves location $i$.
 \end{itemize}
 \subsubsection{Constraints}
-
+	\begin{equation}
+		X(k, i, j) = 1 \implies Y_{d}(k, i) + t(i, j) = Y_{a}(k, j)
+	\end{equation}
+	\begin{equation}
+		Z(k, i) = 1 \implies Y_{s}(k, i) + d(i) = Y_{d}(k, i)
+	\end{equation}
+	\begin{equation}
+		Z(k, i) = 1 \implies Y_{s}(k, i) \geq Y_{a}(k, i)
+	\end{equation}
+	\begin{equation}
+		Z(k, i) = 1 \implies Y_{s}(k, i) \geq e(i)
+	\end{equation}
+	\begin{equation}
+		Z(k, i) = 1 \implies Y_{a}(k, i) \leq l(i)
+	\end{equation}
+	\begin{equation}
+		\sum_{i}^{} X(k, i, j) = Z(k, j), \forall k, j
+	\end{equation}
+	\begin{equation}
+		\sum_{k}^{} Z(k, j) = 1, \forall j
+	\end{equation}
+	\begin{equation}
+		\sum_{i} X(k, i, j) = \sum_{i} (K, j, i), \forall j, k
+	\end{equation}
+	\begin{equation}
+		\sum_{i}^{} X(k, i, 0) \leq K, \forall k
+	\end{equation}
+	\begin{equation}
+		Y_{d} (k, 0) \geq e(k)
+	\end{equation}
+	\begin{equation}
+		X(k, i, 0) = 1 \implies Y_{d} (k, i) + t(i, 0) \leq l(k), \forall k, i
+	\end{equation}
+	\begin{equation}
+		\sum_{i}^{} Z(k, i) \times w(i) \leq c(k), \forall k
+	\end{equation}
 \subsubsection{Objective functions}
+	\begin{equation}
+		\sum_{k, i, j}^{} X(k, i, j) \times d(i, j) \rightarrow min
+	\end{equation}
+\subsection{Mixed Integer Programming Model}
+We also use Constrained Programming Model formulations at section \emph{2.1.4} with transforming inferred relation constraints to create below Mixed Integer Programming Model formulations.
+\subsubsection{Constraints}
+	\begin{itemize}
+		\item Suppose we has a very large constant $M$ and an infinitesimal positive constant $\epsilon$.
+		\item Constraint \emph{2.1} is equivalent with 2 below constraints:
+		\begin{equation}
+			Y_{d}(k, i) + t(i, j) + M \times (X(k, i, j) - 1) \geq Y_{a}(k, j)
+		\end{equation}
+		\begin{equation}
+			Y_{d}(k, i) + t(i, j) + M \times (X(k, i, j) - 1) \leq Y_{a}(k, j)
+		\end{equation}
+		\item Constraint \emph{2.2} is equivalent with 2 below constraints:
+		\begin{equation}
+			Y_{s}(k, i) + d(i) + M \times (X(k, i, j)) \geq Y_{d}(k, i)
+		\end{equation}
+		\begin{equation}
+			Y_{s}(k, i) + d(i) + M \times (X(k, i, j)) \leq Y_{d}(k, i)
+		\end{equation}
+		\item Constraint \emph{2.3} is equivalent with below constraint:
+		\begin{equation}
+			Y_{s}(k, i) \times Z(k, i) \geq Y_{a}(k, i) \times Z(k, i) 
+		\end{equation}\
+		\item Constraint \emph{2.4} is equivalent with below constraint:
+		\begin{equation}
+			Y_{s}(k, i) \times Z(k, i) \geq e(i) \times Z(k, i)
+		\end{equation}
+		\item Constraint \emph{2.5} is equivalent with below constraint:
+		\begin{equation}
+			Y_{a}(k, i) \times Z(k, i) \leq l(i) \times Z(k, i)
+		\end{equation}
+		\item Constraint \emph{2.11} is equivalent with below constraint:
+		\begin{equation}
+			(Y_{d}(k, i) + t(i, 0)) \times X(k, i, 0) \leq l(k) \times X(k, i, 0)
+		\end{equation}
+	\end{itemize}

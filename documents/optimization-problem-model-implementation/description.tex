@@ -1,0 +1,101 @@
+\documentclass{article}
+
+\usepackage[utf8]{vietnam}
+
+\begin{document}
+
+\textbf{Capacitated Vehicle Routing Problem with the Time Window Constraint}
+
+\begin{itemize}
+	\item \textbf{Đặt vấn đề}:
+	\begin{itemize}
+		\item Sử dụng các xe tải để giao hàng đến các địa điểm khác nhau. Mỗi xe tải có tải trọng, thời gian bắt đầu công việc sớm nhất và thời gian kết thúc công việc muộn nhất khác nhau. Mỗi địa điểm giao hàng tương ứng với một đơn hàng. Mỗi đơn hàng có khối lượng, thời gian nhận hàng sớm nhất, thời gian nhận hàng muộn nhất và thời gian dỡ hàng khác nhau. Các xe tải cùng xuất phát từ kho chứa, đi giao hàng ở các địa điểm và trở về kho trước thời gian kết thúc công việc muộn nhất của nó. Để di chuyển giữa nhà kho và điểm giao hàng hoặc giữa các điểm giao hàng với nhau cần một khoảng thời gian nhất định (như nhau với mọi xe tải). Thiết lập lộ trình cho các xe tải để giao hàng đúng yêu cầu và tổng khoảng cách di chuyển của các xe là nhỏ nhất.
+	\end{itemize}
+	\item \textbf{Mô hình chung}:
+	\begin{itemize}
+		\item Đồ thị có hướng $G = (V, E)$:
+		\begin{itemize}
+			\item $V$ là tập các nút của đồ thị:
+			\begin{itemize}
+				\item $|V| = N$.
+				\item Nút $0$ tương ứng với nhà kho.
+				\item Mỗi nút trong các nút còn lại tương ứng với một điểm giao hàng.
+			\end{itemize}
+			\item Mỗi nút $i \ne 0$ có:
+			\begin{itemize}
+				\item $w(i)$ là trọng lượng của đơn hàng.
+				\item $e(i)$ là thời gian nhận hàng sớm nhất.
+				\item $l(i)$ là thời gian nhận hàng muộn nhất.
+				\item $d(i)$ là thời gian dỡ hàng.
+			\end{itemize}
+			\item $E$ là tập các cạnh của đồ thị. Mỗi cạnh $(i, j)$ có:
+			\begin{itemize}
+				\item $t(i, j)$ là thời gian di chuyển.
+				\item $d(i, j)$ là khoảng cách.
+			\end{itemize}
+		\end{itemize}
+		\item K là tập các xe tải. Xe tải $k$ có:
+		\begin{itemize}
+			\item $c(k)$ là tải trọng.
+			\item $e(k)$ là thời gian bắt đầu công việc sớm nhất.
+			\item $l(k)$ là thời gian kết thúc công việc muộn nhất.
+		\end{itemize}
+		\item Các biến trung gian:
+		\begin{itemize}
+			\item $X(i, j)$ xác định tổng số lần các xe tải đi qua tuyến đường $(i, j) \in E$.
+			\item $Y(i)$ là thời gian đơn hàng thứ $i$ được giao.
+			\item $Z_{start}(k)$ là thời gian xuất phát của xe tải $k$.
+			\item $Z_{finish}(k)$ là thời gian trở về kho của xe tải $k$.
+		\end{itemize}
+		\item Ràng buộc:
+		\begin{itemize}
+			\item $Y(i) + d(i) \leq l(i), \forall i \in V$.
+			\item $Z_{start}(k) \geq e(k)$.
+			\item $Z_{finish}(k) \leq l(k)$.
+		\end{itemize}
+		\item {Mục tiêu}:
+		\begin{itemize}
+			\item $\sum_{(i, j) \in E}^{} (d(i, j) * X(i, j))$
+		\end{itemize}
+	\end{itemize}
+	\item \textbf{Mô hình MIP}:
+	\begin{itemize}
+		\item Hằng số:
+		\begin{itemize}
+			\item $t(i, j)$ là thời gian di chuyển từ vị trí $i$ đến vị trí $j$.
+			\item $d(i, j)$ độ dài quãng đường (i, j).
+			\item Nút $|V| + z * |K|, z \in [1.. |V|]$ là nút ảo được sinh ra theo quy tắc sau:
+			\begin{itemize}
+				\item Cạnh $(|V| + z * |K|, |V| + (z + 1) * |K|) \in E$ có thời gian di chuyển và độ dài quãng đường bằng $0$.
+				\item Cạnh $(|V| + z * |K|, |V| + (z - 1) * |K|) \not\in E$.
+				\item Nếu tồn tại cạnh $(0, i)$ thì cũng tồn tại cạnh $(0, |V| + z * |K|)$ với thời gian di chuyển và độ dài quãng đường lần lượt bằng $t(i, 0)$ và $d(i, 0)$.
+				\item Nếu tồn tại cạnh $(i, 0)$ thì cũng tồn tại cạnh $(|V| + z * |K|, 0)$ với thời gian di chuyển và độ dài quãng đường lần lượt bằng $t(i, 0)$ và $d(i, 0)$.
+				\item Luôn tồn tại cạnh $(|V| + z * |K|, 0)$ có thời gian di chuyển và độ dài quãng đường bằng $0$.
+			\end{itemize}
+			\item Mọi cạnh $(0, i)$ trong đồ thị ban đầu đều bị xoá.
+		\end{itemize}
+		% \item Biến quyết định:
+		% \begin{itemize}
+		% 	\item $X(u, v) = 1$, nếu $(u, v) \in E$ được chọn, ngược lại $X(u, v) = 0$.
+		% 	\item $Y(u)$ là thời điểm u nhận được gói tin.
+		% 	\item $M = +\infty$
+		% \end{itemize}
+		% \item Ràng buộc:
+		% \begin{itemize}
+		% 	\item $\sum_{v \in V \\ {u}}^{} X(u, v) = 1, \forall u \in V \\ {s}$
+		% 	\item $Y(s) = 0$
+		% 	\item $Y(u) + M \times (X(v, u) - 1) \leq Y(v) - l(v, u), \forall u \in V \\ {s}$
+		% 	\item $Y(u) - M \times (X(v, u) - 1) \geq Y(v) + l(v, u), \forall u \in V \\ {s}$
+		% 	\item $Y(u) \leq L, \forall u \in V$
+		% \end{itemize}
+		% \item Hàm mục tiêu:
+		% \begin{itemize}
+		% 	\item $\min{\sum_{(u, v) \in E}^{} X(u, v) * c(u, v)}$
+		% \end{itemize}
+		% \item Chú thích:
+		% \begin{itemize}
+		% 	\item Các ràng buộc \emph{(3)} và \emph{(4)} tương đương với ràng buộc $X(v, u) = 1 => Y(u) = Y(s) + l(v, u)$
+		% \end{itemize}
+	\end{itemize}
+\end{itemize}
+\end{document}
